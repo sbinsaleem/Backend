@@ -1,0 +1,26 @@
+version: '3.3'
+services:
+  backend:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+#    init: true
+    deploy:
+      replicas: 3
+    networks:
+    - application
+  db:
+    image: mysql:5.7
+    volumes:
+    - db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: pass
+      MYSQL_DATABASE: backend-db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: pass
+networks:
+  application:
+    name: application
+volumes:
+  db_data: {}
